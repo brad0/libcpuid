@@ -1315,7 +1315,7 @@ int cpuid_present(void)
 #elif defined(PLATFORM_AARCH64)
 # if defined(HAVE_GETAUXVAL) && defined(HWCAP_CPUID) /* Linux */
 	return (getauxval(AT_HWCAP) & HWCAP_CPUID);
-# elif defined(HAVE_ELF_AUX_INFO) && defined(HWCAP_CPUID) /* FreeBSD */
+# elif defined(HAVE_ELF_AUX_INFO) && defined(HWCAP_CPUID) /* FreeBSD/OpenBSD */
 	unsigned long hwcap = 0;
 	if (elf_aux_info(AT_HWCAP, &hwcap, sizeof(hwcap)) == 0)
 		return ((hwcap & HWCAP_CPUID) != 0);
@@ -1455,6 +1455,7 @@ int cpuid_get_raw_data_core(struct cpu_raw_data_t* data, logical_cpu_t logical_c
 		cpu_exec_mrs(AARCH64_REG_MIDR_EL1, data->arm_midr);
 		cpu_exec_mrs(AARCH64_REG_MPIDR_EL1, data->arm_mpidr);
 		cpu_exec_mrs(AARCH64_REG_REVIDR_EL1, data->arm_revidr);
+#if 0
 		cpu_exec_mrs(AARCH64_REG_ID_AA64AFR0_EL1, data->arm_id_aa64afr[0]);
 		cpu_exec_mrs(AARCH64_REG_ID_AA64AFR1_EL1, data->arm_id_aa64afr[1]);
 		cpu_exec_mrs(AARCH64_REG_ID_AA64DFR0_EL1, data->arm_id_aa64dfr[0]);
@@ -1465,6 +1466,7 @@ int cpuid_get_raw_data_core(struct cpu_raw_data_t* data, logical_cpu_t logical_c
 		cpu_exec_mrs(AARCH64_REG_ID_AA64ISAR1_EL1, data->arm_id_aa64isar[1]);
 		cpu_exec_mrs(AARCH64_REG_ID_AA64ISAR2_EL1, data->arm_id_aa64isar[2]);
 		cpu_exec_mrs(AARCH64_REG_ID_AA64ISAR3_EL1, data->arm_id_aa64isar[3]);
+#endif
 		cpu_exec_mrs(AARCH64_REG_ID_AA64MMFR0_EL1, data->arm_id_aa64mmfr[0]);
 		cpu_exec_mrs(AARCH64_REG_ID_AA64MMFR1_EL1, data->arm_id_aa64mmfr[1]);
 		cpu_exec_mrs(AARCH64_REG_ID_AA64MMFR2_EL1, data->arm_id_aa64mmfr[2]);

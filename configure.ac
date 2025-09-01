@@ -71,6 +71,7 @@ build_windows=no
 build_netbsd=no
 build_dragonflybsd=no
 build_freebsd=no
+build_openbsd=no
 build_linux=no
 
 case "${host_os}" in
@@ -85,6 +86,9 @@ case "${host_os}" in
         ;;
     freebsd*)
         build_freebsd=yes
+        ;;
+    openbsd*)
+        build_openbsd=yes
         ;;
     linux*)
         build_linux=yes
@@ -103,7 +107,7 @@ if test "$build_linux" = "yes"; then
     AC_CHECK_FUNCS([getauxval])
 fi
 
-if test "$build_freebsd" = "yes"; then
+if test "$build_freebsd" = "yes" || test "$build_openbsd" = "yes"; then
     AC_CHECK_FUNCS([elf_aux_info])
 fi
 
